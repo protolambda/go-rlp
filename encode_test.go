@@ -26,8 +26,6 @@ import (
 	"runtime"
 	"sync"
 	"testing"
-
-	"github.com/ethereum/go-ethereum/common/math"
 )
 
 type testEncoder struct {
@@ -476,7 +474,7 @@ func BenchmarkPutint(b *testing.B) {
 func BenchmarkEncodeBigInts(b *testing.B) {
 	ints := make([]*big.Int, 200)
 	for i := range ints {
-		ints[i] = math.BigPow(2, int64(i))
+		ints[i] = BigPow(2, int64(i))
 	}
 	out := bytes.NewBuffer(make([]byte, 0, 4096))
 	b.ResetTimer()

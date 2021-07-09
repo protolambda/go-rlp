@@ -26,8 +26,6 @@ import (
 	"reflect"
 	"strings"
 	"testing"
-
-	"github.com/ethereum/go-ethereum/common/math"
 )
 
 func TestStreamKind(t *testing.T) {
@@ -1128,10 +1126,16 @@ func BenchmarkDecodeByteArrayStruct(b *testing.B) {
 	}
 }
 
+// BigPow returns a ** b as a big integer.
+func BigPow(a, b int64) *big.Int {
+	r := big.NewInt(a)
+	return r.Exp(r, big.NewInt(b), nil)
+}
+
 func BenchmarkDecodeBigInts(b *testing.B) {
 	ints := make([]*big.Int, 200)
 	for i := range ints {
-		ints[i] = math.BigPow(2, int64(i))
+		ints[i] = BigPow(2, int64(i))
 	}
 	enc, err := EncodeToBytes(ints)
 	if err != nil {
